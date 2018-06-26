@@ -11,7 +11,7 @@ class MyList extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<section className={classes.mT10vh}>
+			<section className={classes.mT15vh}>
 				<Typography variant="display3" gutterBottom>My List</Typography>
 				<ListContainer pokemonDesc={this.props.pokemonDesc} pokemonList={this.props.pokemonList} />
 			</section>

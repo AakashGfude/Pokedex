@@ -15,6 +15,7 @@ class HomePage extends Component {
 			firstRender: false
 		}
 		this.updateFilter = this.updateFilter.bind(this);
+		this.onScroll = this.onScroll.bind(this);
 	}
 	componentDidMount() {
 
@@ -27,6 +28,10 @@ class HomePage extends Component {
 				firstRender: true
 			})
 		}
+		window.addEventListener('scroll', this.onScroll)
+	}
+	onScroll(e) {
+
 	}
 	updateFilter(obj) {
 		let filteredList = [];
@@ -36,8 +41,16 @@ class HomePage extends Component {
 			pokemonList: filteredList
 		})
 	}
-	componentDidUpdate() {
-		if (!this.state.firstRender) {
+	onScroll() {
+		if (
+			(window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 200) &&
+			this.props.pokemonList.length
+		) {
+			this.props.getNextPokemonList(this.props.nextPokemonListUrl);
+		}
+	}
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.pokemonList.length !== this.props.pokemonList.length) {
 			this.setState({
 				pokemonList: this.props.pokemonList,
 				firstRender: true
@@ -54,7 +67,8 @@ class HomePage extends Component {
 		}
 	}
 	componentWillUnmount() {
-		this.props.clearDesc()
+		this.props.clearDesc();
+		window.removeEventListener('scroll', this.onScroll)
 	}
 	render() {
 		const { classes } = this.props;
@@ -73,6 +87,7 @@ class HomePage extends Component {
 function mapStateToProps(state) {
 	return {
 		pokemonList: state.pokemonReducer.pokemonList,
+		nextPokemonListUrl: state.pokemonReducer.nextPokemonListUrl,
 		pokemonDesc: state.pokemonReducer.singlePokemonData,
 	}
 }
@@ -81,6 +96,9 @@ function mapDispatchToProps(dispatch) {
 	return {
 		getPokemonList: () => {
 			dispatch({ type: 'FETCH_POKEMON' })
+		},
+		getNextPokemonList: (url) => {
+			dispatch({ type: 'FETCH_NEXT_LIST', payload: url})
 		},
 		clearDesc: () => {
 			dispatch({ type: 'CLEAR_SINGLE_POKEMON_DATA' })

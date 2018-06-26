@@ -20,7 +20,8 @@ const Styles = (theme) => ({
 		...theme.mixins.toolbar,
 	},
 	drawerPaper: {
-		position: 'absolute',
+		position: 'fixed',
+		top: '0px',
 		width: drawerWidth,
 	},
 	appLogo: {
