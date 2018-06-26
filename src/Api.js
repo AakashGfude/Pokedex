@@ -7,7 +7,7 @@ function fetchAllPokemonLists() {
 		})
 }
 
-function fetchSinglePokemon(url) {
+function fetchPokemonThroughUrl(url) {
 	return axios.get(url)
 		.then((response) => {
 			return response.data
@@ -16,5 +16,5 @@ function fetchSinglePokemon(url) {
 
 export default {
 	fetchAllPokemonLists,
-	fetchSinglePokemon
+	fetchPokemonThroughUrl
 }

@@ -3,19 +3,34 @@ export default function pokemon(state = {
 	singlePokemonData: null,
 	pokemonListErr: '',
 	singlePokemonDataErr: '',
-	myList: []
+	myList: [],
+	nextPokemonListUrl: ''
 }, action) {
 	switch (action.type) {
 		case 'POKEMON_FETCH_SUCCESS': {
 			return {
 				...state,
-				pokemonList: action.data.results,
+				pokemonList: action.payload,
+			}
+		}
+		case 'NEXT_POKEMON_FETCH_SUCCESS': {
+			let list = state.pokemonList.slice();
+			let newList = list.concat(action.payload);
+			return {
+				...state,
+				pokemonList: newList
 			}
 		}
 		case 'POKEMON_FETCH_ERROR': {
 			return {
 				...state,
 				pokemonListErr: action.error,
+			}
+		}
+		case 'SET_NEXT_FETCH_URL': {
+			return {
+				...state,
+				nextPokemonListUrl: action.payload
 			}
 		}
 		case 'SINGLE_POKEMON_FETCH_SUCCESS': {
