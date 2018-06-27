@@ -5,7 +5,7 @@ function* fetchAllPokemon() {
 	try {
 		const data = yield call(Api.fetchAllPokemonLists);
 		yield put({ type: 'POKEMON_FETCH_SUCCESS', payload: data.results });
-		yield put({ type: 'SET_NEXT_FETCH_URL', payload: data.next})
+		yield put({ type: 'SET_NEXT_FETCH_URL', payload: data.next })
 		return data;
 	} catch (error) {
 		yield put({ type: 'POKEMON_FETCH_ERROR', error })
@@ -16,8 +16,8 @@ function* fetchNextPokemon(url) {
 	try {
 		const data = yield call(Api.fetchPokemonThroughUrl, url);
 		yield put({ type: 'NEXT_POKEMON_FETCH_SUCCESS', payload: data.results });
-		yield put({ type: 'SET_NEXT_FETCH_URL', payload: data.next})
-	} catch(error) {
+		yield put({ type: 'SET_NEXT_FETCH_URL', payload: data.next })
+	} catch (error) {
 		yield put({ type: 'POKEMON_FETCH_ERROR', error })
 	}
 }
@@ -47,11 +47,13 @@ export function* singlePokemonSaga() {
 
 export function* fetchMyListSaga() {
 	const obj = yield call([localStorage, 'getItem'], 'myList');
-	yield put({ type: 'POPULATE_MY_LIST', payload: obj })
+	if (obj) {
+		yield put({ type: 'POPULATE_MY_LIST', payload: obj })
+	}
 }
 
 export function* fetchNextPokemonList() {
-	while(true) {
+	while (true) {
 		const action = yield take('FETCH_NEXT_LIST');
 		yield call(fetchNextPokemon, action.payload);
 	}
