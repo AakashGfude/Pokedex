@@ -65,6 +65,7 @@ export default function pokemon(state = {
 			const index = state.myList.indexOf(action.payload);
 			let newArray = state.myList.slice();
 			newArray.splice(index, 1);
+			localStorage.setItem('myList', JSON.stringify(newArray))
 			return {
 				...state,
 				myList: newArray
