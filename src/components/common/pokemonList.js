@@ -22,9 +22,7 @@ class PokeMonList extends PureComponent {
           <Grid container className={classes.demo} justify="center" spacing={24}>
             { this.props.list.map((item) => {
 							return (
-							<Grid item xs={12} sm={3} lg={2} key={item.name}>
-								<PokemonCard item={item}/>
-							</Grid>
+								<PokemonCard item={item} key={item.name} />
 							)
 						})}
           </Grid>

@@ -30,9 +30,6 @@ class HomePage extends Component {
 		}
 		window.addEventListener('scroll', this.onScroll)
 	}
-	onScroll(e) {
-
-	}
 	updateFilter(obj) {
 		let filteredList = [];
 		const filterObj = Object.assign({}, this.state.filters, obj);
@@ -49,12 +46,14 @@ class HomePage extends Component {
 			this.props.getNextPokemonList(this.props.nextPokemonListUrl);
 		}
 	}
-	componentDidUpdate(prevProps, prevState) {
-		if (prevProps.pokemonList.length !== this.props.pokemonList.length) {
-			this.setState({
-				pokemonList: this.props.pokemonList,
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.pokemonList.length !== prevState.pokemonList.length) {
+			return {
+				pokemonList: nextProps.pokemonList,
 				firstRender: true
-			})
+			}
+		} else {
+			return null
 		}
 	}
 	filterWithTitle(title, list) {
