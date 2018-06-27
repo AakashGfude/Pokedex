@@ -1,6 +1,6 @@
-To run the package, clone it and run [npm install]
+To run the package, clone it and run `npm install`
 
-######## Create React App
+## Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
